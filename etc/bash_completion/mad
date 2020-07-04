@@ -5,6 +5,6 @@ function _mad {
   COMPREPLY=( $(compgen -W "${pages}" -- ${cur}) )
   return 0
 }
-complete -F _mad mad
+complete -F _mad -o bashdefault -o default mad
 
 # vim:ft=sh
