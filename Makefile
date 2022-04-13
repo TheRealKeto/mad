@@ -1,22 +1,23 @@
+INSTALL    ?= install
+PREFIX     ?= /usr/local
+COMPLETION := $(PREFIX)/share/bash-completion/completions
 
-PREFIX?=/usr/local
-ifeq ($(shell uname), Linux)
-COMPLETION=/etc/bash_completion.d
-else
-COMPLETION=$(PREFIX)/etc/bash_completion.d
+ifeq ($(shell uname),Linux)
+COMPLETION := /etc/bash_completion.d
 endif
 
+all: install
+
 install:
-	mkdir -p $(PREFIX)/share/mad $(PREFIX)/etc $(PREFIX)/bin $(COMPLETION)
-	cp -f bin/mad $(PREFIX)/bin/mad
-	cp -f share/mad/mad.md $(PREFIX)/share/mad/mad.md
-	cp -f etc/mad.conf $(PREFIX)/etc/mad.conf
-	cp -f etc/bash_completion/mad $(COMPLETION)/mad
+	$(INSTALL) -Dm0755 bin/mad $(DESTDIR)$(PREFIX)/bin/mad
+	$(INSTALL) -Dm0644 share/mad/mad.md $(DESTDIR)$(PREFIX)/share/mad/mad.md
+	$(INSTALL) -Dm0644 etc/mad.conf $(DESTDIR)$(PREFIX)/etc/mad.conf
+	$(INSTALL) -Dm0644 etc/bash_completion/mad $(DESTDIR)$(COMPLETION)/mad
 
 uninstall:
-	rm -f $(PREFIX)/bin/mad
-	rm -f $(PREFIX)/share/mad/mad.md
-	rm -f $(PREFIX)/etc/mad.conf
-	rm -f $(COMPLETION)/mad
+	rm -rf $(DESTDIR)$(PREFIX)/bin/mad \
+		$(DESTDIR)$(PREFIX)/share/mad \
+		$(DESTDIR)$(PREFIX)/etc/mad.conf \
+		$(DESTDIR)$(COMPLETION)/mad
 
-.PHONY: install uninstall
+.PHONY: all install uninstall
