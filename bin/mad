@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 VERSION="0.4.1"
-REMOTE=git://github.com/visionmedia/mad-pages.git
-REMOTE_MAD=git://github.com/visionmedia/mad.git
 
 BINPATH=$0
 if [ -h "$BINPATH" ]; then
@@ -112,39 +110,6 @@ display_mad_usage() {
   exit
 }
 
-#
-# Install remote manuals.
-#
-
-install_all_remote() {
-  local path=${MAD_ROOT}/../share/mad
-  echo
-  echo "  ... cloning repo"
-  cd /tmp && rm -fr mad-pages
-  git clone --depth 1 $REMOTE mad-pages
-  cd mad-pages
-  for page in *.md; do
-    echo "  ... installing $page"
-    cp -f $page $path/$page
-  done
-  echo "  ... complete"
-  echo
-}
-
-#
-# Install mad(1) again.
-#
-
-install_mad() {
-  echo
-  echo "  ... cloning repo"
-  cd /tmp && rm -fr mad
-  git clone --depth 1 $REMOTE_MAD mad
-  cd mad && make install
-  echo "  ... updated to $(mad --version)"
-  echo
-}
-
 # file required
 
 [[ -z "$1" ]] && display_mad_usage
@@ -157,12 +122,6 @@ case $1 in
     ;;
   -h|--help|help)
     display_mad_usage
-    ;;
-  -u|--update|update)
-    install_all_remote
-    ;;
-  -U|--update-self|update-self)
-    install_mad
     ;;
   -l|--list|ls|list)
     list_pages
