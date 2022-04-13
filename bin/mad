@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="0.4.1"
+VERSION="@MAD_VERSION@"
 
 BINPATH=$0
 if [ -h "$BINPATH" ]; then
