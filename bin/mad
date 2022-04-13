@@ -96,6 +96,7 @@ display_file() {
       s|_(.+?)_|\e[$em\1\e[0m|g; \
       s|    (.+)|    \e[$code\1\e[0m|g; \
       s|\[(.+)\]\((.+)\)|\e[$em\e[$link\1\e[0m \e[$url(\2)\e[0m|g; \
+      s|<((ftp|http)s?://.+?)>^\e[$em\e[$link\1\e[0m|g \
       s|<(.+?)>||g; \
       s|^|  |;" \
     | less -R
